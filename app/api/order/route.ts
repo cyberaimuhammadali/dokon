@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// Server-side Supabase (service role — full access)
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
-const BOT_TOKEN        = process.env.BOT_TOKEN!;
-const ORDER_CHANNEL_ID = process.env.ORDER_CHANNEL_ID!;
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  const BOT_TOKEN        = process.env.BOT_TOKEN!;
+  const ORDER_CHANNEL_ID = process.env.ORDER_CHANNEL_ID!;
+
   try {
     const body = await req.json();
     const { user_id, full_name, phone, address, note, total_price, language, items } = body;
