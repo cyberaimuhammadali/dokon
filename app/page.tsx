@@ -1,12 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useLangStore } from '@/lib/store';
-import { products, categories } from '@/lib/products';
+import { useLangStore, useProductStore } from '@/lib/store';
+import { categories } from '@/lib/products';
 import { ProductCard } from '@/components/ProductCard';
 
 export default function HomePage() {
   const { lang, setLang } = useLangStore();
+  const products = useProductStore((s) => s.products);
   const featured = products.slice(0, 6);
 
   return (

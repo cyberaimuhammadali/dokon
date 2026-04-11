@@ -2,14 +2,15 @@
 
 import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { products, categories } from '@/lib/products';
-import { useLangStore } from '@/lib/store';
+import { categories } from '@/lib/products';
+import { useLangStore, useProductStore } from '@/lib/store';
 import { ProductCard } from '@/components/ProductCard';
 
 function CatalogContent() {
   const params = useSearchParams();
   const [activeCategory, setActiveCategory] = useState(params.get('cat') || 'all');
   const { lang } = useLangStore();
+  const products = useProductStore((s) => s.products);
 
   const filtered =
     activeCategory === 'all'

@@ -3,8 +3,7 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useCartStore, useLangStore } from '@/lib/store';
-import { products } from '@/lib/products';
+import { useCartStore, useLangStore, useProductStore } from '@/lib/store';
 import { fmt } from '@/components/ProductCard';
 import { useTelegram } from '@/components/TelegramProvider';
 import { Product } from '@/lib/types';
@@ -14,6 +13,7 @@ export default function CheckoutPage() {
   const { lang }     = useLangStore();
   const { user }     = useTelegram();
   const { items, clearCart } = useCartStore();
+  const products = useProductStore((s) => s.products);
 
   const cartItems = Object.entries(items)
     .map(([id, qty]) => ({ product: products.find((p) => p.id === Number(id)), qty }))

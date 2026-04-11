@@ -13,6 +13,7 @@ export interface Product {
   categoryId: string;
   unit: string;
   emoji: string;
+  image_url?: string | null;
 }
 
 export interface OrderItem {

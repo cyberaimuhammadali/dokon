@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getProductById } from '@/lib/products';
-import { useCartStore, useLangStore } from '@/lib/store';
+import { useCartStore, useLangStore, useProductStore } from '@/lib/store';
 import { fmt } from '@/components/ProductCard';
 
 export default function ProductPage({ params }: { params: { id: string } }) {
-  const product = getProductById(Number(params.id));
+  const products = useProductStore((s) => s.products);
+  const product = products.find((p) => p.id === Number(params.id));
   if (!product) return notFound();
 
   const { items, addItem, updateQuantity } = useCartStore();

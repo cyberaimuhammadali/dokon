@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { TelegramProvider } from '@/components/TelegramProvider';
 import { BottomNav } from '@/components/BottomNav';
+import { ProductsLoader } from '@/components/ProductsLoader';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={inter.className}>
         <TelegramProvider>
+          <ProductsLoader />
           <main className="mx-auto min-h-screen max-w-md pb-24">
             {children}
           </main>

@@ -2,7 +2,8 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Language } from './types';
+import { Language, Product } from './types';
+import { products as staticProducts } from './products';
 
 // ─── Cart ────────────────────────────────────────────────────────────────────
 interface CartState {
@@ -39,6 +40,26 @@ export const useCartStore = create<CartState>()(
     { name: 'cart' }
   )
 );
+
+// ─── Products (Supabase dan yuklanadi, fallback: static) ─────────────────────
+interface ProductState {
+  products: Product[];
+  loadProducts: () => Promise<void>;
+}
+
+export const useProductStore = create<ProductState>()((set, get) => ({
+  products: staticProducts,
+  loadProducts: async () => {
+    if (get().products !== staticProducts) return; // allaqachon yuklangan
+    try {
+      const res = await fetch('/api/products');
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length) set({ products: data });
+      }
+    } catch { /* static qoladi */ }
+  },
+}));
 
 // ─── Language ────────────────────────────────────────────────────────────────
 interface LangState {
